@@ -1171,7 +1171,8 @@ class BartModel(BartPretrainedModel):
 
     @add_start_docstrings(PARALLELIZE_DOCSTRING)
     def parallelize(self, device_map=None):
-        device_map = init_device_map(len(self.encoder.layers), len(self.decoder.layers), device_map)
+        if device_map is None:
+            device_map = init_device_map(len(self.encoder.layers), len(self.decoder.layers), device_map)
         encoder_device_map = device_map["encoder"]
         decoder_device_map = device_map["decoder"]
 
